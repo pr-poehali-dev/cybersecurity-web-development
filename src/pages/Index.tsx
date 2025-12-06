@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
+import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,6 +8,14 @@ import Icon from '@/components/ui/icon';
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -14,6 +23,44 @@ export default function Index() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Имитация отправки формы
+    setTimeout(() => {
+      toast({
+        title: 'Заявка отправлена!',
+        description: 'Мы свяжемся с вами в ближайшее время.',
+      });
+      setFormData({ name: '', email: '', phone: '', message: '' });
+      setIsSubmitting(false);
+    }, 1000);
+  };
+
+  const handleConsultation = () => {
+    scrollToSection('contacts');
+    toast({
+      title: 'Заполните форму',
+      description: 'Оставьте заявку и мы свяжемся с вами',
+    });
+  };
+
+  const handleServiceClick = (serviceName: string) => {
+    toast({
+      title: serviceName,
+      description: 'Для получения подробной информации свяжитесь с нами',
+    });
+    scrollToSection('contacts');
+  };
+
+  const handleNewsClick = (newsTitle: string) => {
+    toast({
+      title: 'Читать статью',
+      description: newsTitle,
+    });
   };
 
   const technologies = [
@@ -137,7 +184,7 @@ export default function Index() {
               </button>
             </div>
 
-            <Button className="glow">Консультация</Button>
+            <Button className="glow" onClick={handleConsultation}>Консультация</Button>
           </div>
         </div>
       </nav>
@@ -159,7 +206,7 @@ export default function Index() {
                 Наши услуги
                 <Icon name="ArrowRight" className="ml-2" size={20} />
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 glass border-white/20">
+              <Button size="lg" variant="outline" className="text-lg px-8 glass border-white/20" onClick={() => scrollToSection('technologies')}>
                 Узнать больше
               </Button>
             </div>
@@ -224,7 +271,7 @@ export default function Index() {
                   </div>
                   <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
                   <p className="text-foreground/70 mb-6">{service.description}</p>
-                  <Button variant="ghost" className="group w-full justify-center">
+                  <Button variant="ghost" className="group w-full justify-center" onClick={() => handleServiceClick(service.title)}>
                     Подробнее
                     <Icon name="ArrowRight" className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
                   </Button>
@@ -246,7 +293,7 @@ export default function Index() {
 
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {news.map((item, index) => (
-              <Card key={index} className="glass border-white/10 hover:border-primary/30 transition-all duration-300 group cursor-pointer animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
+              <Card key={index} className="glass border-white/10 hover:border-primary/30 transition-all duration-300 group cursor-pointer animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }} onClick={() => handleNewsClick(item.title)}>
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-3">
                     <span className="text-xs px-3 py-1 rounded-full bg-primary/20 text-primary font-medium">
@@ -315,25 +362,51 @@ export default function Index() {
             </div>
 
             <Card className="glass border-white/10 p-8">
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Ваше имя</label>
-                  <Input placeholder="Иван Иванов" className="glass border-white/20" />
+                  <Input 
+                    placeholder="Иван Иванов" 
+                    className="glass border-white/20"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    required
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Email</label>
-                  <Input type="email" placeholder="ivan@example.com" className="glass border-white/20" />
+                  <Input 
+                    type="email" 
+                    placeholder="ivan@example.com" 
+                    className="glass border-white/20"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    required
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Телефон</label>
-                  <Input type="tel" placeholder="+7 (___) ___-__-__" className="glass border-white/20" />
+                  <Input 
+                    type="tel" 
+                    placeholder="+7 (___) ___-__-__" 
+                    className="glass border-white/20"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    required
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Сообщение</label>
-                  <Textarea placeholder="Расскажите о вашей задаче..." className="glass border-white/20 min-h-[120px]" />
+                  <Textarea 
+                    placeholder="Расскажите о вашей задаче..." 
+                    className="glass border-white/20 min-h-[120px]"
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    required
+                  />
                 </div>
-                <Button className="w-full glow" size="lg">
-                  Отправить заявку
+                <Button className="w-full glow" size="lg" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
                   <Icon name="Send" className="ml-2" size={18} />
                 </Button>
               </form>
