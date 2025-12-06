@@ -148,10 +148,10 @@ export default function Index() {
         <div className="container mx-auto relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-text">
-              Защита вашего бизнеса в цифровом мире
+              Защита в цифровом мире для каждого
             </h1>
             <p className="text-xl text-foreground/80 mb-8 max-w-2xl mx-auto">
-              Комплексные решения по кибербезопасности для компаний любого масштаба. 
+              Комплексные решения по кибербезопасности для частных лиц и компаний. 
               Защитите свои данные от современных угроз.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
@@ -167,7 +167,7 @@ export default function Index() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto">
             {[
-              { number: '500+', label: 'Защищенных компаний' },
+              { number: '500+', label: 'Защищенных клиентов' },
               { number: '99.9%', label: 'Время безотказной работы' },
               { number: '24/7', label: 'Техподдержка' },
               { number: '10+', label: 'Лет на рынке' }
@@ -186,7 +186,7 @@ export default function Index() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">Наши технологии</h2>
             <p className="text-foreground/70 max-w-2xl mx-auto">
-              Используем передовые решения для защиты вашего бизнеса
+              Используем передовые решения для защиты ваших данных и устройств
             </p>
           </div>
 
