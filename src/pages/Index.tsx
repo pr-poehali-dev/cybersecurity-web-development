@@ -43,20 +43,17 @@ export default function Index() {
     {
       icon: 'ShieldCheck',
       title: 'Аудит безопасности',
-      description: 'Комплексная проверка вашей инфраструктуры на уязвимости',
-      price: 'от 150 000 ₽'
+      description: 'Комплексная проверка вашей инфраструктуры на уязвимости'
     },
     {
       icon: 'Users',
       title: 'Обучение персонала',
-      description: 'Корпоративные тренинги по кибербезопасности',
-      price: 'от 80 000 ₽'
+      description: 'Корпоративные тренинги по кибербезопасности'
     },
     {
       icon: 'Activity',
       title: 'Мониторинг 24/7',
-      description: 'Круглосуточное наблюдение за безопасностью систем',
-      price: 'от 200 000 ₽/мес'
+      description: 'Круглосуточное наблюдение за безопасностью систем'
     }
   ];
 
@@ -227,13 +224,10 @@ export default function Index() {
                   </div>
                   <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
                   <p className="text-foreground/70 mb-6">{service.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-primary">{service.price}</span>
-                    <Button variant="ghost" className="group">
-                      Подробнее
-                      <Icon name="ArrowRight" className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
-                    </Button>
-                  </div>
+                  <Button variant="ghost" className="group w-full justify-center">
+                    Подробнее
+                    <Icon name="ArrowRight" className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
+                  </Button>
                 </CardContent>
               </Card>
             ))}
